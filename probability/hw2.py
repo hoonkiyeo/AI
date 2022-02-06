@@ -1,6 +1,6 @@
 import sys
 import math
-
+import string
 
 def get_parameter_vectors():
     '''
@@ -35,16 +35,15 @@ def get_parameter_vectors():
     return (e,s)
 
 def shred(filename):
-    #Using a dictionary here. You may change this to any data structure of
-    #your choice such as lists (X=[]) etc. for the assignment
-    X=dict()
+    X=dict.fromkeys(string.ascii_uppercase, 0)
     with open (filename,encoding='utf-8') as f:
-        # TODO: add your code here
-
+        for line in f:
+            for c in line.upper():
+                if c in X:
+                    X[c] += 1
+                continue
     return X
 
 
 
 # TODO: add your code here for the assignment
-# You are free to implement it as you wish!
-# Happy Coding!
