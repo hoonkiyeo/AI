@@ -13,3 +13,10 @@ def load_data(filepath):
             row['Speed'] = int(row['Speed'])
             lst.append(row)
     return lst
+
+
+def calculate_x_y(row):
+    info = data[row]
+    x = info['Attack'] + info['Sp. Atk'] + info['Speed']
+    y = info['Defense'] + info['Sp. Def'] + info['HP']
+    return [x,y]
