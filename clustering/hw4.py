@@ -1,22 +1,21 @@
 import csv
+import pandas as pd
+import numpy as np
+
 
 def load_data(filepath):
     lst = []
-    with open('Pokemon.csv') as file:
+    with open(filepath) as file:
         reader = csv.DictReader(file)
         for row in reader:
-            row['HP'] = int(row['HP'])
-            row['Attack'] = int(row['Attack'])
-            row['Defense'] = int(row['Defense'])
-            row['Sp. Atk'] = int(row['Sp. Atk'])
-            row['Sp. Def'] = int(row['Sp. Def'])
-            row['Speed'] = int(row['Speed'])
             lst.append(row)
     return lst
 
-
-def calculate_x_y(row):
-    info = data[row]
-    x = info['Attack'] + info['Sp. Atk'] + info['Speed']
-    y = info['Defense'] + info['Sp. Def'] + info['HP']
-    return [x,y]
+def calc_features(row):
+    x1 = int(row['Attack'])
+    x2 = int(row['Sp. Atk'])
+    x3 = int(row['Speed'])
+    x4 = int(row['Defense'])
+    x5 = int(row['Sp. Def'])
+    x6 = int(row['HP'])
+    return np.array((x1,x2,x3,x4,x5,x6)).reshape(6,)
