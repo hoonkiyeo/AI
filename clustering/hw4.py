@@ -1,7 +1,8 @@
 import csv
 import pandas as pd
 import numpy as np
-
+from scipy.cluster.hierarchy import dendrogram, linkage
+import matplotlib.pyplot as plt
 
 def load_data(filepath):
     lst = []
@@ -19,3 +20,13 @@ def calc_features(row):
     x5 = int(row['Sp. Def'])
     x6 = int(row['HP'])
     return np.array((x1,x2,x3,x4,x5,x6)).reshape(6,)
+
+
+def hac(features):
+    pass
+
+def imshow_hac(Z):
+    fig = plt.figure(figsize=(10, 6))
+    den = dendrogram(Z)
+    plt.show()
+    
