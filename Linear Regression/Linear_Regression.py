@@ -9,7 +9,7 @@ def get_results(filename):
     plt.plot(df['year'], df['days'])
     plt.xlabel("Year")
     plt.ylabel("Number of frozen days")
-    plt.show()
+    plt.savefig("plot.png")
     
     features = np.matrix(df['year'])
     ones = np.matrix(np.ones((len(df['year']))).astype(int))
