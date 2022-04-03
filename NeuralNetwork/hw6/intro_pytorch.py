@@ -5,9 +5,6 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torchvision import datasets, transforms
 
-# Feel free to import other packages, if needed.
-# As long as they are supported by CSL machines.
-
 
 def get_data_loader(training = True):    
     transform= transforms.Compose([
@@ -97,7 +94,7 @@ if __name__ == '__main__':
     test_loader = get_data_loader(False)
     test_images = test_loader.dataset[0][0]
     test_images = test_images[None]
-    test_images = torch.cat((x, (test_loader.dataset[1][0])[None]),0)
+    test_images = torch.cat((test_images, (test_loader.dataset[1][0])[None]),0)
     
     train_model(model, train_loader, criterion, 5)
     print()
