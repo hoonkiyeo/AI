@@ -11,16 +11,37 @@ import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
 
+import torch.nn.functional as F
 
 class LeNet(nn.Module):
     def __init__(self, input_shape=(32, 32), num_classes=100):
         super(LeNet, self).__init__()
-        # certain definitions
+        #first convolutional layer
+        self.cnn1 = nn.Conv2d(3,6,5,1)
+        #second convolutional layer
+        self.cnn2 = nn.Conv2d(6,16,5,1)
+        #Linear layers
+        self.lin1 = nn.Linear(400, 256)
+        self.lin2 = nn.Linear(256, 128)
+        self.lin3 = nn.Linear(128, 100)
+
 
     def forward(self, x):
         shape_dict = {}
         # certain operations
-        return out, shape_dict
+        x = F.max_pool2d(F.relu(self.cnn1(x)), 2, 2)
+        shape_dict[1] = list(map(int, x.shape))
+        x = F.max_pool2d(F.relu(self.cnn2(x)), 2, 2)
+        shape_dict[2] = list(map(int, x.shape))
+        x = torch.flatten(x,1)
+        shape_dict[3] = list(map(int, x.shape))
+        x = F.relu(self.lin1(x))
+        shape_dict[4] = list(map(int, x.shape))
+        x = F.relu(self.lin2(x))
+        shape_dict[5] = list(map(int, x.shape))
+        x = self.lin3(x)
+        shape_dict[6] = list(map(int, x.shape))
+        return x, shape_dict
 
 
 def count_model_params():
@@ -28,9 +49,9 @@ def count_model_params():
     return the number of trainable parameters of LeNet.
     '''
     model = LeNet()
-    model_params = 0.0
+    model_params = sum(param.numel() for name, param in model.named_parameters())
 
-    return model_params
+    return model_params / 1e6
 
 
 def train_model(model, train_loader, optimizer, criterion, epoch):
